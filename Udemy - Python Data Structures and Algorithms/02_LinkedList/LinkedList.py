@@ -133,12 +133,16 @@ class LinkedList:
     
 
     def remove(self, index):
+
         if index < 0 or index > self.length:
             return None
+        
         if index == 0:
             return self.pop_first()
+        
         if index == self.length - 1:
             return self.pop() 
+        
         prev = self.get(index - 1)
         temp = prev.next
         prev.next = temp.next
@@ -148,11 +152,15 @@ class LinkedList:
 
 
     def reverse(self):
+
         temp = self.head
+
         self.head = self.tail
         self.tail = temp
-        after = self.head,next
+
+        after = self.head.next
         before = None
+
         for _ in range(self.length):
             after = temp.next
             temp.next = before
@@ -173,9 +181,12 @@ class LinkedList:
     def has_loop(self):
         slow = self.head
         fast = self.head
+
         while fast is not None and fast.next is not None:
+
             slow = slow.next
             fast = fast.next.next
+
             if slow == fast:
                 return True
         return False
@@ -212,9 +223,63 @@ class LinkedList:
         self.head = dummy1.next
         return dummy1
 
-
-
+    def remove_duplicates(self):
+        if self.head is None:
+            return None    
             
+        current = self.head
+        seen = set([current.value])
+        while current.next:
+            
+            if current.next.value in seen:
+                current.next = current.next.next 
+            else:
+                seen.add(current.next.value)
+                current = current.next
+
+
+    def binary_to_decimal(self):
+        if self.head is None:
+            return 0
+    
+        temp = self.head
+        temp_list = []
+
+        while temp is not None:
+            temp_list.append(temp.value)
+            temp = temp.next
+        
+        decimal = 0
+    
+        for i, value in enumerate(reversed(temp_list)):
+            decimal += value * (2 ** i)
+    
+        return decimal
+
+    def reverse_between(self, start_index, end_index):
+        if not self.head or start_index == end_index:
+            return
+
+        dummy = Node(0)
+        dummy.next = self.head
+        prev = dummy
+
+
+        for _ in range(start_index):
+            prev = prev.next
+
+
+        current = prev.next
+        for _ in range(end_index - start_index):
+            temp = current.next
+            current.next = temp.next
+            temp.next = prev.next
+            prev.next = temp
+
+        if start_index == 0:
+            self.head = dummy.next
+        
+
 my_linked_list = LinkedList(4)
 
 
@@ -228,6 +293,12 @@ my_linked_list.append(10)
 my_linked_list.append(17)
 my_linked_list.append(24)
 my_linked_list.append(20)
+my_linked_list.append(20)
+my_linked_list.append(20)
+my_linked_list.append(20)
+
+
+
 
 #my_linked_list.print_list()
 
@@ -276,4 +347,8 @@ def find_kth_from_end(linkedlist, k):
 
   # Output: 4
 
+my_linked_list.print_list()
 
+my_linked_list.remove_duplicates()
+
+my_linked_list.print_list()
