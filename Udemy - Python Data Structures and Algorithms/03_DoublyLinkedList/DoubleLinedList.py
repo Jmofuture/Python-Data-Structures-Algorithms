@@ -114,7 +114,7 @@ class DoublyLinkedList: #constructor de Listas
 
     def insert(self, index, value):
 
-        if index < 0 or index >= self.length:
+        if index < 0 or index > self.length:
             return False
 
         if index == 0:
@@ -138,7 +138,7 @@ class DoublyLinkedList: #constructor de Listas
 
     def remove(self, index):
 
-        if index < 0 or index >= self.length:
+        if index < 0 or index > self.length:
             return None
         
         if index == 0:
@@ -158,8 +158,95 @@ class DoublyLinkedList: #constructor de Listas
         self.length -= 1
         return temp
 
+
+    def print_list(self):
+        if self.length == 0:
+            return None
+        
+        temp = self.head
+
+        while temp:
+            print(temp.value)
+            temp = temp.next
+        
+    def swap_first_last(self):
+        if self.length < 2:  
+            return
+
+        self.head.value = self.tail.value
+        self.tail.value = self.head.value
+
+
+    def reverse(self):
+        if self.length < 2:
+            return
+
+        current = self.head
+        
+        while current:
+            temp = current.next
+            current.next = current.prev
+            current.prev = temp
+        
+            current = temp
+
+        self.head = self.tail
+        self.tail = self.head
+        
+        return True
+
+
+    def is_palindrome(self):
+        if self.length is None or self.length < 2:
+            return True
+        
+        nums = []
+        current = self.head
+
+        while current:
+            nums.append(current.value)
+            current = current.next
+
+        reverse_nums = nums[::-1]
+
+        return nums == reverse_nums
+        
+
+    def swap_pairs(self):
+        if self.length is None or self.length < 2:
+            return      
+        
+        dummy = Node(0)
+        dummy.next = self.head
+        current = dummy
+
+        while current.next and current.next.next:
+            first = current.next
+            second = current.next.next
+
+
+            first.next = second.next
+            second.next = first
+            current.next = second
+
+    
+            current = first
+
+
+        self.head = dummy.next
+
+
+
 l = DoublyLinkedList(37)
 
-l.append(33)
+l.append(1)
+l.append(1)
+l.append(1)
+l.append(1)
+l.append(37)
 
 
+
+print(l.is_palindrome())
+
+l.print_list()
