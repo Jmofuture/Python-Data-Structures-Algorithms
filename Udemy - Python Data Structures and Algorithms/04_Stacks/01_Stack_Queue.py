@@ -43,7 +43,40 @@ class Stack:
         
         return temp
 
-        
+    def peek(self):
+        if self.is_empty():
+            return None
+        else:
+            return self.stack_list[-1]
+
+    def size(self):
+        return len(self.stack_list) 
+
+    def size(self):
+        return len(self.stack_list)
+
+
+def sort_stack(stack):
+    if stack is None or stack.is_empty():
+        return stack
+
+    temp_stack = Stack()
+
+    while not stack.is_empty():
+
+        temp = stack.pop()
+
+        while not temp_stack.is_empty() and temp_stack.peek() > temp:
+            stack.push(temp_stack.pop())
+
+        temp_stack.push(temp)
+
+    while not temp_stack.is_empty():
+        stack.push(temp_stack.pop())
+
+    return stack
+
+
 
 
 my_stack = Stack(37)
